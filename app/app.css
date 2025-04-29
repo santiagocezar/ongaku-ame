@@ -11,6 +11,7 @@ body {
   background-image: url(/osage.jpg);
   background-size: contain;
   background-repeat: no-repeat;
+  background-attachment: fixed;
   height: 100%;
 }
 body {

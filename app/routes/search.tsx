@@ -1,5 +1,6 @@
-import { searchArtist } from "~/lib/spoti";
-import type { Route } from "./+types/home";
+import { needsAuth, searchArtist, setReturnHref } from "~/lib/spoti";
+import { redirect } from "react-router";
+import type { Route } from "./+types/search";
 
 export function meta({ }: Route.MetaArgs) {
 	return [
@@ -9,8 +10,13 @@ export function meta({ }: Route.MetaArgs) {
 }
 
 export async function clientLoader({
-	params, request
+	request
 }: Route.ClientLoaderArgs) {
+	const authURL = await needsAuth()
+	if (authURL !== undefined) {
+		setReturnHref(request.url)
+		return redirect(authURL)
+	}
 	const q = new URL(request.url).searchParams.get("q") ?? ""
 	const artists = await searchArtist(q);
 	return { artists };

@@ -9,6 +9,7 @@ import {
 
 import type { Route } from "./+types/root";
 import "./app.css";
+import { generateAuthURL, NoTokenError, setReturnHref as setReturnURL } from "./lib/spoti";
 
 export const links: Route.LinksFunction = () => [
   { rel: "preconnect", href: "https://fonts.googleapis.com" },
@@ -56,6 +57,16 @@ export function ErrorBoundary({ error }: Route.ErrorBoundaryProps) {
       error.status === 404
         ? "The requested page could not be found."
         : error.statusText || details;
+  } else if (error instanceof NoTokenError) {
+    console.error(error)
+    setReturnURL(location.href)
+    generateAuthURL().then(url => location.href = url)
+
+    return (
+      <main className="pt-16 p-4 container mx-auto">
+        <h1>Volviendo a iniciar sesión...</h1>
+      </main>
+    )
   } else if (import.meta.env.DEV && error && error instanceof Error) {
     details = error.message;
     stack = error.stack;

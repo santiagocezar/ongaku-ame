@@ -15,3 +15,12 @@ declare module 'react' {
         [key: `--${string}`]: string | number
     }
 }
+
+
+import { DurationFormat as _DurationFormat  } from '@formatjs/intl-durationformat';
+
+declare global {
+    namespace Intl {
+        class DurationFormat extends _DurationFormat {}
+    }
+}

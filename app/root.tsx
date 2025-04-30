@@ -13,6 +13,20 @@ import { generateAuthURL, NoTokenError, setReturnHref as setReturnURL } from "./
 import "./app.css";
 import "./styles/icon.css";
 
+import { shouldPolyfill } from '@formatjs/intl-durationformat/should-polyfill'
+
+async function polyfill() {
+  const unsupportedLocale = shouldPolyfill()
+  // This locale is supported
+  if (!unsupportedLocale) {
+    return
+  }
+  // Load the polyfill 1st BEFORE loading data
+  await import('@formatjs/intl-durationformat/polyfill-force')
+}
+
+await polyfill()
+
 export const links: Route.LinksFunction = () => [
   { rel: "preconnect", href: "https://fonts.googleapis.com" },
   {

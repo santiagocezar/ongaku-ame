@@ -9,6 +9,7 @@
     "typecheck": "react-router typegen && tsc"
   },
   "dependencies": {
+    "@formatjs/intl-durationformat": "^0.7.4",
     "@react-router/node": "^7.5.2",
     "@react-router/serve": "^7.5.2",
     "clsx": "^2.1.1",

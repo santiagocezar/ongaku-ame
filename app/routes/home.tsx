@@ -12,8 +12,8 @@ export default function Home({
 	loaderData,
 }: Route.ComponentProps) {
 	return (
-		<main className="flex flex-col items-center justify-center p-4 h-full">
-			<Form action="/search" method="get">
+		<main id="home" className="flex flex-col items-center justify-center p-4 h-full">
+			<Form action="/browse" method="get">
 				<input className="px-4 py-2 text-3xl border-b-2 placeholder-white" type="search" name="q" placeholder="Buscar artista..." />
 			</Form>
 		</main>

@@ -8,8 +8,10 @@ import {
 } from "react-router";
 
 import type { Route } from "./+types/root";
-import "./app.css";
 import { generateAuthURL, NoTokenError, setReturnHref as setReturnURL } from "./lib/spoti";
+
+import "./app.css";
+import "./styles/icon.css";
 
 export const links: Route.LinksFunction = () => [
   { rel: "preconnect", href: "https://fonts.googleapis.com" },
@@ -20,7 +22,7 @@ export const links: Route.LinksFunction = () => [
   },
   {
     rel: "stylesheet",
-    href: "https://fonts.googleapis.com/css2?family=Klee+One&family=Nothing+You+Could+Do&family=Short+Stack&display=swap",
+    href: "https://fonts.googleapis.com/css2?family=Klee+One&family=Caveat&family=Short+Stack&display=swap",
   },
 ];
 

@@ -7,3 +7,11 @@ interface ImportMetaEnv {
 interface ImportMeta {
     readonly env: ImportMetaEnv
 }
+
+import 'react';
+
+declare module 'react' {
+    interface CSSProperties {
+        [key: `--${string}`]: string | number
+    }
+}

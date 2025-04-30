@@ -1,6 +1,6 @@
 import { finishAuth } from "~/lib/spoti";
 import type { Route } from "./+types/pong";
-import { redirect } from "react-router";
+import { replace } from "react-router";
 
 export async function clientLoader({
     request
@@ -8,7 +8,7 @@ export async function clientLoader({
     const code = new URL(request.url).searchParams.get("code") ?? ""
     const href = await finishAuth(code)
 
-    return redirect(href)
+    return replace(href)
 }
 
 export default function Home({

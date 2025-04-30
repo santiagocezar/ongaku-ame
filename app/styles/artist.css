@@ -1,0 +1,45 @@
+@property --floor {
+    syntax: '<integer>';
+    initial-value: 0;
+    inherits: true /* or true depending on context */
+}
+
+@property --rotation {
+    syntax: '<integer>';
+    initial-value: 0;
+    inherits: true /* or true depending on context */
+}
+
+.artist-cover, .artist-cover-info {
+    --x0: calc(var(--n) * 1.334 + var(--n) * var(--n) * 0.10 + 0.235);
+    --floor: calc(var(--x0) - .5);
+    --x: calc(var(--x0) - var(--floor));
+    --rotation: calc(var(--x) * 4);
+
+    mask-image: url("/rough-square.svg");
+    mask-size: 100%;
+
+    rotate: calc(var(--rotation) * 90deg + var(--x) * 4deg - 2deg);
+    /* translate: 0 calc(16px * var(--x) - 8px); */
+    /* animation: twitch calc(.25s + .5s * var(--x)) steps(2) infinite;  */
+
+    & .img {
+        rotate: calc(var(--rotation) * -90deg);
+    }
+}
+
+a.transitioning .artist-cover {
+    view-transition-name: image-expand;
+}
+
+.artist-cover-info {
+    view-transition-name: image-expand;
+}
+
+@keyframes twitch {
+    0% {
+    }
+    100% {
+        rotate: calc(var(--rotation) * 90deg - var(--x) * 4deg + 2deg);
+    }
+}

@@ -1,0 +1,19 @@
+.icon {
+    width: 32px;
+    height: 32px;
+    background-image: url("/icons.svg");
+    animation: sprites .25s steps(1) infinite; 
+}
+
+.icon.house {
+    background-position-y: 0;
+}
+
+.icon.back {
+    background-position-y: -32px;
+}
+
+@keyframes sprites {
+    0% { background-position-x:   0%; }
+    50% { background-position-x: 100%; }
+}

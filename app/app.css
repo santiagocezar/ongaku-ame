@@ -1,19 +1,36 @@
 @import "tailwindcss";
 
 @theme {
-  --font-sans: "Nothing You Could Do", "Klee One", ui-sans-serif, system-ui, sans-serif,
+  --font-sans: "Caveat", "Klee One", "Comic Sans MS", "Comic Sans", cursive,
     "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  --font-title: "Short Stack", "Klee One", ui-sans-serif, system-ui, sans-serif,
+    "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+}
+
+@utility auto-fill-*{
+  grid-template-columns: repeat(auto-fill, minmax(min(--value([*]), 100%), 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(min(--value(--text-*), 100%), 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(min(var(--spacing)* --value(integer), 100%), 1fr));
+}
+
+@utility auto-fit-*{
+  grid-template-columns: repeat(auto-fit, minmax(min(--value([*]), 100%), 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(min(--value(--text-*), 100%), 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(min(var(--spacing)* --value(integer), 100%), 1fr));
 }
 
 html,
 body {
   background-color: #b2b2b2;
-  background-image: url(/osage.jpg);
-  background-size: contain;
-  background-repeat: no-repeat;
-  background-attachment: fixed;
   height: 100%;
 }
 body {
   filter: invert(0);
+}
+
+#home {
+  background-image: url(/osage.jpg);
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
 }

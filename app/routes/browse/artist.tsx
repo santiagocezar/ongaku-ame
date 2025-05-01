@@ -73,7 +73,7 @@ export default function ArtistInfo({
 			>
 				
 			</div>
-			<div className="grid grid-cols-[1fr_2fr] p-4 w-full max-w-6xl mx-auto">
+			<div className="grid grid-cols-1 md:grid-cols-[1fr_2fr] p-4 w-full max-w-6xl mx-auto">
 				<aside>
 					<div 
 						style={{

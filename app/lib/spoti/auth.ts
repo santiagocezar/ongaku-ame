@@ -3,8 +3,6 @@ import { getSavedToken, saveToken } from "./token";
 import * as util from "./util"
 import * as v from 'valibot';
 
-const redirectUri = 'http://127.0.0.1:5173/pong';
-
 export async function needsAuth() {
     if (!getSavedToken()) return await generateAuthURL()
 }
@@ -19,13 +17,16 @@ export async function generateAuthURL() {
     const hashed = await util.sha256(codeVerifier)
     const codeChallenge = util.base64encode(hashed);
     
+    const redirectUri = new URL(location.href)
+    redirectUri.pathname = "/pong"
+
     authUrl.search = util.params({
         response_type: 'code',
         client_id: import.meta.env.VITE_CLIENT_ID,
         scope,
         code_challenge_method: 'S256',
         code_challenge: codeChallenge,
-        redirect_uri: redirectUri,
+        redirect_uri: redirectUri.toString(),
     })
 
     return authUrl.toString();

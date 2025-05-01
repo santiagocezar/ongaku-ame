@@ -7,6 +7,12 @@ export async function needsAuth() {
     if (!getSavedToken()) return await generateAuthURL()
 }
 
+function redirectUri() {
+    const url = new URL(location.href)
+    
+    return url.origin + "/pong"    
+}
+
 export async function generateAuthURL() {
     const codeVerifier = util.generateRandomString(64);
     localStorage.setItem('code_verifier', codeVerifier);
@@ -16,9 +22,6 @@ export async function generateAuthURL() {
 
     const hashed = await util.sha256(codeVerifier)
     const codeChallenge = util.base64encode(hashed);
-    
-    const redirectUri = new URL(location.href)
-    redirectUri.pathname = "/pong"
 
     authUrl.search = util.params({
         response_type: 'code',
@@ -26,7 +29,7 @@ export async function generateAuthURL() {
         scope,
         code_challenge_method: 'S256',
         code_challenge: codeChallenge,
-        redirect_uri: redirectUri.toString(),
+        redirect_uri: redirectUri(),
     })
 
     return authUrl.toString();
@@ -44,7 +47,7 @@ export async function finishAuth(code: string) {
             client_id: import.meta.env.VITE_CLIENT_ID,
             grant_type: "authorization_code",
             code,
-            redirect_uri: redirectUri,
+            redirect_uri: redirectUri(),
             code_verifier: codeVerifier!,
         })
     }).then((res) => res.json())

@@ -68,10 +68,10 @@ export default function AlbumInfo({
 					</p>
 				</aside>
 				<article>
-					<h2 className="font-title text-3xl px-8">
+					<h2 className="font-title text-3xl pt-8 md:pt-0 md:px-8">
 						Pistas
 					</h2>
-					<div className="flex flex-col gap-2 p-8">
+					<div className="flex flex-col gap-2 py-8 md:px-8">
 						{loaderData.album.tracks.items.map((track, i) => (
 							<TrackItem key={track.id} album={loaderData.album} track={track} i={i} />
 						))}

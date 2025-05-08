@@ -65,13 +65,13 @@ export default function Likes({
                 </p>
             </aside> */}
             <article>
-                <h2 className="font-title text-3xl px-8">
+                <h2 className="font-title text-3xl">
                     Tus Me Gusta
                 </h2>
-                <div className="flex flex-col gap-2 p-8">
+                <div className="flex flex-col gap-2 py-8">
                     {loaderData.tracks.length ? (
                         loaderData.tracks.filter(track => conLike?.has(track.id)).map((track, i) => (
-                            <TrackItem key={track.id} album={track.album} track={track} i={i} />
+                            <TrackItem showArtist key={track.id} album={track.album} track={track} i={i} />
                         ))
                     ) : (
                         <p className='text-2xl'>No hay ninguno!</p>

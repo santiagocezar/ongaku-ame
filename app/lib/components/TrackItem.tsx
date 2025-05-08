@@ -8,11 +8,23 @@ import { agregarLike, borrarLike, tieneLike } from "../likesData"
 interface TrackItemProps {
     album: SimplifiedAlbum
     track: SimplifiedTrack
+    showArtist?: boolean 
     i: number
 }
 
 export default function TrackItem(props: TrackItemProps) {
     const liked = useLiveQuery(() => tieneLike(props.track.id))
+
+    let artists = ""
+    if (props.showArtist) {
+        artists = "por " + props.track.artists.map((artist, i) => (
+            (
+                i !== 0 && i === props.track.artists.length - 1 ? " y " :
+                i > 0 ? ", " :
+                "" 
+            ) + artist.name
+        )).join("") + ", dura "
+    }
 
     function toggleLike() {
         if (liked) borrarLike(props.track.id)
@@ -25,6 +37,7 @@ export default function TrackItem(props: TrackItemProps) {
             link={props.track.external_urls.spotify}
             title={props.track.name}
             subtitle={
+                artists +
                 new Intl.DurationFormat(undefined, {
                     style: "narrow"
                 }).format({

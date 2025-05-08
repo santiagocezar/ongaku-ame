@@ -57,8 +57,8 @@ export default function ArtistInfo({
 					<p className="text-xl font-title">{loaderData.info.followers.total.toLocaleString(undefined, {maximumSignificantDigits: 3, notation: 'compact'})} seguidores</p>
 				</aside>
 				<article>
-					<h2 className="font-title text-3xl px-8">Albums</h2>
-					<div className="flex flex-col gap-2 p-8">
+					<h2 className="font-title text-3xl pt-8 md:pt-0 md:px-8">Albums</h2>
+					<div className="flex flex-col gap-2 py-8 md:px-8">
 						{loaderData.albums.items.map((album, i) => (
 							<AlbumItem key={album.id} album={album} i={i} />
 						))}

@@ -33,8 +33,21 @@ body {
   background-size: contain;
   background-repeat: no-repeat;
   background-attachment: fixed;
+  background-position: bottom left;  
 }
+/* 
+#home {
+  background-image: url(/osage.jpg);
+  background-size: auto 70%;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-position: bottom left;  
+} */
 
+.browse-area {
+  mask-image: url("/rough-square.svg");
+  mask-size: 100% 100%;
+}
 button {
   cursor: pointer;
 }

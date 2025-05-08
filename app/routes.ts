@@ -6,6 +6,7 @@ export default [
         index("routes/browse/search.tsx"),
         route("artist/:id", "routes/browse/artist.tsx"),
         route("album/:id", "routes/browse/album.tsx"),
+        route("likes", "routes/browse/likes.tsx"),
     ]),
     route("pong", "routes/pong.tsx"),
 ] satisfies RouteConfig;

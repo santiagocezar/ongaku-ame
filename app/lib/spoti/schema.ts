@@ -67,7 +67,7 @@ export const SimplifiedAlbum = v.object({
         reason: v.string(),
     })),
     type: v.string(),
-    album_group: v.string(),
+    // album_group: v.string(),
 });
 
 export const ArtistsAlbums = ResultsOf(SimplifiedAlbum);
@@ -94,7 +94,7 @@ export const SimplifiedTrack = v.object({
 });
 
 export const Album = v.object({
-    ...v.omit(SimplifiedAlbum, ["album_group"]).entries,
+    ...SimplifiedAlbum.entries,
     artists: v.array(SimplifiedArtist),
     tracks: ResultsOf(SimplifiedTrack),
     copyrights: v.array(v.object({
@@ -110,6 +110,16 @@ export const Album = v.object({
     popularity: v.number(),
 });
 
+export const Track = v.object({
+    ...SimplifiedTrack.entries,
+    album: SimplifiedAlbum,
+    popularity: v.number(),
+});
+
+export const SeveralTracks = v.object({
+    tracks: v.array(Track),
+});
+
 export type Token = v.InferOutput<typeof Token>
 export type ImageInfo = v.InferOutput<typeof ImageInfo>
 export type ExternalURLs = v.InferOutput<typeof ExternalURLs>
@@ -121,3 +131,4 @@ export type SimplifiedAlbum = v.InferOutput<typeof SimplifiedAlbum>
 export type ArtistsAlbums = v.InferOutput<typeof ArtistsAlbums>
 export type SimplifiedTrack = v.InferOutput<typeof SimplifiedTrack>
 export type Album = v.InferOutput<typeof Album>
+export type SeveralTracks = v.InferOutput<typeof SeveralTracks>

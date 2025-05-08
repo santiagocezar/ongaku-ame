@@ -13,6 +13,14 @@
     background-position-y: -32px;
 }
 
+.icon.like {
+    background-position-y: -64px;
+}
+
+.icon.dislike {
+    background-position-y: -96px;
+}
+
 @keyframes sprites {
     0% { background-position-x:   0%; }
     50% { background-position-x: 100%; }

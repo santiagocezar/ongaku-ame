@@ -1,5 +1,5 @@
 import '~/styles/artist.css'
-import { Artist, needsAuth, searchArtist, setReturnHref } from "~/lib/spoti";
+import { Artist, needsAuth, searchArtist, setReturnHref, spotiLoader } from "~/lib/spoti";
 import { Form, Link, redirect, useNavigation, useSearchParams } from "react-router";
 import type { Route } from "./+types/search";
 import clsx from 'clsx';
@@ -11,18 +11,12 @@ export function meta({ }: Route.MetaArgs) {
 	];
 }
 
-export async function clientLoader({
-	request
-}: Route.ClientLoaderArgs) {
-	const authURL = await needsAuth()
-	if (authURL !== undefined) {
-		setReturnHref(request.url)
-		return redirect(authURL)
+export const clientLoader = spotiLoader(
+	async ({ request }: Route.ClientLoaderArgs) => {
+		const q = new URL(request.url).searchParams.get("q") ?? ""
+		return { result: await searchArtist(q) };
 	}
-	const q = new URL(request.url).searchParams.get("q") ?? ""
-	const result = await searchArtist(q);
-	return { result };
-}
+)
 
 
 function ArtistItem(props: { artist: Artist, i: number }) {
@@ -59,7 +53,7 @@ export default function Home({
 	return (
 		<div className={clsx("transition-opacity grid auto-rows-min auto-fill-40 md:auto-fill-60 w-full max-w-6xl mx-auto gap-4 p-4", { "opacity-50": nav.state === "loading" })}>
 			{loaderData.result.artists.items.map((artist, i) => (
-				<ArtistItem artist={artist} i={i} key={artist.id} />
+				<ArtistItem key={artist.id} artist={artist} i={i} />
 			))}
 		</div>
 	);

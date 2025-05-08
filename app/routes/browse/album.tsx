@@ -1,7 +1,8 @@
 import '~/styles/artist.css'
-import { Album, Artist, getAlbum, getArtist, getArtistAlbums, needsAuth, searchArtist, setReturnHref, SimplifiedAlbum, SimplifiedTrack } from "~/lib/spoti";
+import { getAlbum, needsAuth, setReturnHref, spotiLoader } from "~/lib/spoti";
 import { Link, redirect } from "react-router";
 import type { Route } from "./+types/album";
+import TrackItem from '~/lib/components/TrackItem';
 
 export function meta({ }: Route.MetaArgs) {
 	return [
@@ -10,56 +11,11 @@ export function meta({ }: Route.MetaArgs) {
 	];
 }
 
-export async function clientLoader({
-	params, request
-}: Route.ClientLoaderArgs) {
-	const authURL = await needsAuth()
-	if (authURL !== undefined) {
-		setReturnHref(request.url)
-		return redirect(authURL)
-	}
-	const album = await getAlbum(params.id);
-	return { album };
-}
-
-function TrackItem({
-	album, track, i
-}: { album: Album, track: SimplifiedTrack, i: number }) {
-	const imgSrc = album.images?.[0]?.url
-	
-	return (
-		<Link to={track.external_urls.spotify} className="flex gap-2 items-start">
-			<div 
-				style={{
-					"--n": i,
-				}}
-				className="artist-cover h-16 aspect-square"
-			>
-				<div 
-					className="rounded-2xl img w-full h-full bg-cover bg-center bg-white flex items-end"
-					style={{
-						backgroundImage: imgSrc ? `url('${imgSrc}')` : "none"
-					}}
-				>
-				</div>
-			</div>
-			<div>
-				<p className="text-3xl">
-					{track.name}
-				</p>
-				<p className="font-title">
-					{new Intl.DurationFormat(undefined, {
-						style: "narrow"
-					}).format({
-						hours: Math.floor(track.duration_ms / 1000 / 3600),
-						minutes: Math.floor((track.duration_ms / 1000) % 3600 / 60),
-						seconds: Math.floor((track.duration_ms / 1000) % 60)
-					})}
-				</p>
-			</div>
-		</Link>
+export const clientLoader = spotiLoader(
+	async ({ params }: Route.ClientLoaderArgs) => (
+		{ album: await getAlbum(params.id) }
 	)
-}
+)
 
 export default function AlbumInfo({
 	loaderData,
@@ -117,7 +73,7 @@ export default function AlbumInfo({
 					</h2>
 					<div className="flex flex-col gap-2 p-8">
 						{loaderData.album.tracks.items.map((track, i) => (
-							<TrackItem album={loaderData.album} track={track} i={i} />
+							<TrackItem key={track.id} album={loaderData.album} track={track} i={i} />
 						))}
 					</div>
 				</article>

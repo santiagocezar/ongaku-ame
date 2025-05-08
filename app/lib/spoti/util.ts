@@ -1,5 +1,3 @@
-
-
 export function params(values: Record<string, string>) {
     return new URLSearchParams(values).toString()
 }

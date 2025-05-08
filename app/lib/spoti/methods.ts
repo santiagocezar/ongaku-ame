@@ -1,6 +1,6 @@
 import { parse } from 'valibot';
 import { mustGetSavedToken } from './token';
-import { Album, Artist, ArtistsAlbums, ArtistsResponse, SimplifiedAlbum } from './schema';
+import { Album, Artist, ArtistsAlbums, ArtistsResponse, SeveralTracks, SimplifiedAlbum } from './schema';
 import { params } from './util';
 
 export async function searchArtist(q: string) {
@@ -28,6 +28,14 @@ export async function getAlbum(id: string) {
     const res = await spotiFetch(`/v1/albums/${id}`)
 
     return parse(Album, res)
+}
+
+export async function getSeveralTracks(ids: string[]) {
+    const res = await spotiFetch(`/v1/tracks/?${params({
+        ids: ids.join(",")
+    })}`)
+
+    return parse(SeveralTracks, res)
 }
 
 async function spotiFetch(path: string) {

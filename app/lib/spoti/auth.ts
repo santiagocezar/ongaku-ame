@@ -13,6 +13,8 @@ function redirectUri() {
     return url.origin + "/pong"    
 }
 
+const clientID = () => localStorage.getItem("client_id") || import.meta.env.VITE_CLIENT_ID
+
 export async function generateAuthURL() {
     const codeVerifier = util.generateRandomString(64);
     localStorage.setItem('code_verifier', codeVerifier);
@@ -25,7 +27,7 @@ export async function generateAuthURL() {
 
     authUrl.search = util.params({
         response_type: 'code',
-        client_id: import.meta.env.VITE_CLIENT_ID,
+        client_id: clientID(),
         scope,
         code_challenge_method: 'S256',
         code_challenge: codeChallenge,
@@ -44,7 +46,7 @@ export async function finishAuth(code: string) {
             "Content-Type": "application/x-www-form-urlencoded"
         },
         body: util.params({
-            client_id: import.meta.env.VITE_CLIENT_ID,
+            client_id: clientID(),
             grant_type: "authorization_code",
             code,
             redirect_uri: redirectUri(),

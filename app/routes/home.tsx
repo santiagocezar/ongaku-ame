@@ -21,6 +21,11 @@ export default function Home({
 					<div className="icon like"></div>
 					Canciones que me gustaron
 				</Link>
+				<details className="self-start w-full">
+					<summary className="opacity-50">Cambiar client ID</summary>
+					<input className=" py-0 text-xl w-full border-b-2 placeholder-[#b2b2b2]" type="search" name="q" placeholder={import.meta.env.VITE_CLIENT_ID} />
+					
+				</details>
 			</div>
 		</main>
 	);
